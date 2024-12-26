@@ -28,6 +28,16 @@ let weather = {
   },
 };
 
+const url = new URL(window.location.href);
+const params = url.searchParams;
+const cities = ["New York", "Los Angeles", "Chicago", "San Francisco", "Washington, D.C.", "London", "Paris", "Berlin", "Rome", "Moscow", "Beijing", "Tokyo"];
+let city = params.get('city');
+if (city == undefined) {
+  city = cities[Math.floor(Math.random() * cities.length)];
+} else {
+  document.querySelector(".search-bar").value = city;
+}
+
 document.querySelector(".search button").addEventListener("click", function () {
   weather.search();
 });
@@ -36,7 +46,7 @@ document
   .addEventListener("keyup", function (event) {
     if (event.key == "Enter") weather.search();
   });
-weather.fetchWeather("Greater Noida");
+weather.fetchWeather(city);
 
 
 function getweather(data){
@@ -52,7 +62,7 @@ function getweather(data){
   document.querySelector(".humidity").innerHTML = "Humidity: " + humidity + "%";
   document.querySelector(".wind").innerHTML = "Wind: " + speed + "Km/hr";
   document.querySelector(".weather ").classList.remove("loading");
-  document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?" + description + "')";
+  // document.body.style.backgroundImage = "url('https://source.unsplash.com/1600x900/?" + description + "')";
   document.querySelector(".temperature-degree").style.position = "relative";
   document.querySelector(".temperature-degree").style.visibility = "visible";
   document.querySelector(".humidity").style.position = "relative";
